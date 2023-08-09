@@ -1,0 +1,6 @@
+{
+  "key_name": "Test_0710",
+  "algorithm": "RSA (Asymmetric key used for Encrypt and Decrypt, Sign và Verify)",
+  "type": "RSA",
+  "keylength": "3072 bits"
+}

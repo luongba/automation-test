@@ -1,0 +1,6 @@
+{
+  "key_name": "Test_0709",
+  "algorithm": "ECDSA (Asymmetric key used for Sign and Verify)",
+  "type": "ECDSA",
+  "elliptic_curve_id": "NIST_P256"
+}

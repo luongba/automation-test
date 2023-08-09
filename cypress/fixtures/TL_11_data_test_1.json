@@ -1,0 +1,7 @@
+{
+    "key_name": "-@",
+    "algorithm": "RSA (Asymmetric key used for Encrypt and Decrypt, Sign và Verify)",
+    "type": "RSA",
+    "keylength": "3072 bits"
+  }
+  
