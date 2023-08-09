@@ -1,20 +1,35 @@
-// ***********************************************************
-// This example support/index.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+Cypress.Commands.add("loginDevelopment", () => {
+    cy.fixture("account.json").then((data) => {
+        cy.visit("/");
+        cy.get("#username").type(data.username).should("be.visible");
+        cy.get("#password").type(data.password).should("be.visible");
+        cy.get("#kc-login").click();
+    });
 
-// Import commands.js using ES2015 syntax:
-import './key'
+    cy.get("#buttonFirstService").should("be.visible").click();
+    cy.wait(1000);
+    cy.get('input[placeholder="Tìm kiếm theo tên dự án"]')
+        .should("be.visible")
+        .type("TTT");
+    cy.get('input[placeholder="Tìm kiếm theo tên dự án"]')
+        .should("be.visible")
+        .type("{enter}");
+    cy.get("td > div > span").contains("TTT").should("be.visible").click();
+});
+Cypress.Commands.add("loginProduction", () => {
+    cy.fixture("account.json").then((data) => {
+        cy.visit("/");
+        cy.get("#username").type(data.username).should("be.visible");
+        cy.get("#password").type(data.password).should("be.visible");
+        cy.get("#kc-login").click();
+    });
 
+    cy.get("#buttonFirstService").should("be.visible").click();
+    cy.wait(1000);
+    cy.get(".ant-table-body").scrollTo(0, 500);
+    cy.get("td > div > span").contains("huyen").should("be.visible").click();
+});
+import "./key";
+import "./environment";
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
