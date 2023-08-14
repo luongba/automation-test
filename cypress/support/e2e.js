@@ -1,5 +1,5 @@
 Cypress.Commands.add("loginDevelopment", () => {
-    cy.fixture("account.json").then((data) => {
+    cy.fixture("accountDevelopment.json").then((data) => {
         cy.visit("/");
         cy.get("#username").type(data.username).should("be.visible");
         cy.get("#password").type(data.password).should("be.visible");
@@ -17,7 +17,7 @@ Cypress.Commands.add("loginDevelopment", () => {
     cy.get("td > div > span").contains("TTT").should("be.visible").click();
 });
 Cypress.Commands.add("loginProduction", () => {
-    cy.fixture("account.json").then((data) => {
+    cy.fixture("accountProduction.json").then((data) => {
         cy.visit("/");
         cy.get("#username").type(data.username).should("be.visible");
         cy.get("#password").type(data.password).should("be.visible");
@@ -30,6 +30,7 @@ Cypress.Commands.add("loginProduction", () => {
     cy.get("td > div > span").contains("huyen").should("be.visible").click();
 });
 import "./key";
+import "./certificate";
 import "./environment";
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
