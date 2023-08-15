@@ -32,5 +32,6 @@ Cypress.Commands.add("loginProduction", () => {
 import "./key";
 import "./certificate";
 import "./environment";
+import "./secret"
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
