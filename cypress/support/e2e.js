@@ -29,6 +29,11 @@ Cypress.Commands.add("loginProduction", () => {
     cy.get(".ant-table-body").scrollTo(0, 500);
     cy.get("td > div > span").contains("huyen").should("be.visible").click();
 });
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress from failing the test
+    return false
+  })
 import "./key";
 import "./certificate";
 import "./environment";

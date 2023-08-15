@@ -99,7 +99,7 @@ Cypress.Commands.add("deleteKeySuccess", (fileData) => {
   cy.fixture(fileData).then((data) => {
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type(data.key_search);
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type("{enter}");
-    cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).click();
+    cy.get("td > a > span").filter((index, element) => element.innerText.trim() === data.key_search).click();
     cy.wait(1000)
     var query = ""
     cy.url().then(url => {
