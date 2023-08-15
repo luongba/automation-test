@@ -99,23 +99,87 @@ Cypress.Commands.add("deleteKeySuccess", (fileData) => {
   cy.fixture(fileData).then((data) => {
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type(data.key_search);
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type("{enter}");
-    cy.get("td > div > span").eq(0).click();
-    Cypress.env("environment") === "production"
+    cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).click();
+    cy.wait(1000)
+    var query = ""
+    cy.url().then(url => {
+      // 'url' chứa URL hiện tại của trang web
+      const parts = url.split("=");
+      query = parts[1]
+      cy.visit("/key-manager/keys");
+      cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).parent().parent().parent().find("td > div > span").click();
+      Cypress.env("environment") === "production"
       ? cy.get(".btn-button-primary").should("be.visible").click()
       : cy.get("#okButton").should("be.visible").click();
-    cy.wait(2000);
-    cy.get("td > a > span").then($spans => {
-      if ($spans.length > 0) {
-        // Phần tử tồn tại
-        cy.log("a");
-      } else {
-        // Phần tử không tồn tại
-        cy.log("b");
-      }
+      cy.visit(`/key-manager/keys/DetailKeys?detail=${parts[1]}`);
+      const divSelector = ".ant-notification-notice-message";
+
+      cy.get(divSelector)
+        .contains("Không tìm thấy")
+        .should("be.visible");
     });
   });
 });
 
+//TL6
+Cypress.Commands.add("deleteKeyFail", (fileData) => {
+  Cypress.env("environment") === "production"
+    ? cy.loginProduction()
+    : cy.loginDevelopment();
+
+  cy.visit("/key-manager/keys");
+  cy.fixture(fileData).then((data) => {
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type(data.key_search);
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type("{enter}");
+    cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).click();
+    cy.wait(1000)
+    var query = ""
+    cy.url().then(url => {
+      const parts = url.split("=");
+      query = parts[1]
+      cy.visit("/key-manager/keys");
+      cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).parent().parent().parent().find("td > div > span").click();
+      Cypress.env("environment") === "production"
+      ? cy.get(".btn-button-tertiary").should("be.visible").click()
+      : cy.get("#cancelButtonDetailBackup").should("be.visible").click();
+      cy.visit(`/key-manager/keys/DetailKeys?detail=${parts[1]}`);
+      const divSelector = ".ant-notification-notice-message";
+      cy.get("input.ant-input.ant-input-disabled")
+      .eq(0)
+      .invoke("val")
+      .should("eq", data.key_search);
+    });
+  });
+});
+
+//TL7
+Cypress.Commands.add("deleteKeyFailX", (fileData) => {
+  Cypress.env("environment") === "production"
+    ? cy.loginProduction()
+    : cy.loginDevelopment();
+
+  cy.visit("/key-manager/keys");
+  cy.fixture(fileData).then((data) => {
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type(data.key_search);
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type("{enter}");
+    cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).click();
+    cy.wait(1000)
+    var query = ""
+    cy.url().then(url => {
+      const parts = url.split("=");
+      query = parts[1]
+      cy.visit("/key-manager/keys");
+      cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).parent().parent().parent().find("td > div > span").click();
+      cy.get(".ant-modal-close-x").should("be.visible").click()
+      cy.visit(`/key-manager/keys/DetailKeys?detail=${parts[1]}`);
+      const divSelector = ".ant-notification-notice-message";
+      cy.get("input.ant-input.ant-input-disabled")
+      .eq(0)
+      .invoke("val")
+      .should("eq", data.key_search);
+    });
+  });
+});
 // TL7
 Cypress.Commands.add("createKey", (fileData) => {
   // Load the data from the fixture
