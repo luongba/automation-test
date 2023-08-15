@@ -312,8 +312,8 @@ Cypress.Commands.add("createKeyCancel", (fileData) => {
   cy.get("button.btn-button-tertiary").click();
   cy.wait(2000);
   return cy.url().then((currentURL) => {
-    if (currentURL === "/key-manager/keys") {
-      return true;
+    if (currentURL.includes('/key-manager/keys')) {
+      cy.log("success")
     } else {
       cy.fail("Lỗi không quay lại trang danh sách");
     }
