@@ -15,6 +15,7 @@ Cypress.Commands.add("createSecretSuccess", (fileData) => {
   cy.get(".ant-notification-notice-message")
     .contains("Tạo Secret thành công")
     .should("be.visible");
+  cy.detailSecret(fileData);
 });
 // TL_34
 Cypress.Commands.add("createSecretFaild34", (fileData) => {
@@ -254,9 +255,9 @@ Cypress.Commands.add("detailSecret", (fileData) => {
           .eq(0)
           .invoke("val")
           .then((inputValue) => {
-            const numericInputValue = inputValue.trim().toString();
+            const numericInputValue = inputValue.toString().trim();
             expect(numericInputValue).to.equal(
-              data.secret_value[i].key.trim().toString()
+              data.secret_value[i].key.toString().trim()
             ); // So sánh giá trị số từ trường nhập với giá trị số dự kiến
           });
         cy.get("table")
@@ -266,9 +267,9 @@ Cypress.Commands.add("detailSecret", (fileData) => {
           .eq(1)
           .invoke("val")
           .then((inputValue) => {
-            const numericInputValue = inputValue.trim().toString();
+            const numericInputValue = inputValue.toString().trim();
             expect(numericInputValue).to.equal(
-              data.secret_value[i].value.trim().toString()
+              data.secret_value[i].value.toString().trim()
             ); // So sánh giá trị số từ trường nhập với giá trị số dự kiến
           });
       } catch (error) {}
@@ -283,9 +284,9 @@ Cypress.Commands.add("detailSecret", (fileData) => {
             .eq(0)
             .invoke("val")
             .then((inputValue) => {
-              const numericInputValue = inputValue.trim().toString();
+              const numericInputValue = inputValue.toString().trim();
               expect(numericInputValue).to.equal(
-                data.metadata_value[i].key.trim().toString()
+                data.metadata_value[i].key.toString().trim()
               ); // So sánh giá trị số từ trường nhập với giá trị số dự kiến
             });
           cy.get("table")
@@ -295,9 +296,9 @@ Cypress.Commands.add("detailSecret", (fileData) => {
             .eq(1)
             .invoke("val")
             .then((inputValue) => {
-              const numericInputValue = inputValue.trim().toString();
+              const numericInputValue = inputValue.toString().trim();
               expect(numericInputValue).to.equal(
-                data.metadata_value[i].value.trim().toString()
+                data.metadata_value[i].value.toString().trim()
               ); // So sánh giá trị số từ trường nhập với giá trị số dự kiến
             });
         } catch (error) {}
