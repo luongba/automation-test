@@ -117,12 +117,12 @@ Cypress.Commands.add("AddCheckExist", (fileData) => {
 
   cy.visit("/key-manager/ssl-certificate/AddSSLCertificate");
   cy.fixture(fileData).then((data) => {
-    cy.get('#certificateForm_name').type(data.certificate_name)
-    cy.get('#certificateForm_region').type(data.region)
-    cy.get('#certificateForm_certificate').type(data.certificate)
-    cy.get('#certificateForm_intermediates').type(data.intermediates)
-    cy.get('#certificateForm_private_key').type(data.private_key)
-    cy.get('#certificateForm_private_key_passphrase').type(data.passphrase)
+    cy.get('#certificateForm_name').type(data.certificate_name).should('be.visible');
+    cy.get('#certificateForm_region').type(data.region).should('be.visible');
+    cy.get('#certificateForm_certificate').type(data.certificate).should('be.visible');
+    cy.get('#certificateForm_intermediates').type(data.intermediates).should('be.visible');
+    cy.get('#certificateForm_private_key').type(data.private_key).should('be.visible');
+    cy.get('#certificateForm_private_key_passphrase').type(data.passphrase).should('be.visible');
     cy.get('#buttonCreateCertificate').click();
     return cy.url().then((currentURL) => {
     if (currentURL === "/key-manager/ssl-certificate") {
@@ -143,8 +143,8 @@ Cypress.Commands.add("addSuccessingTL23", (fileData) => {
 
   cy.visit("/key-manager/ssl-certificate/AddSSLCertificate");
   cy.fixture(fileData).then((data) => {
-    cy.get('#certificateForm_name').type(data.certificate_name)
-    cy.get('#certificateForm_region').type(data.region)
+    cy.get('#certificateForm_name').type(data.certificate_name).should('be.visible');
+    cy.get('#certificateForm_region').type(data.region).should('be.visible');
     if(data.intermediates !== '' && data.intermediates !== undefined){
       cy.get('#certificateForm_intermediates').invoke('val', data.intermediates).trigger('focus')
     }
@@ -153,7 +153,7 @@ Cypress.Commands.add("addSuccessingTL23", (fileData) => {
     }
     cy.get('#certificateForm_private_key').type(data.private_key)
     if(data.passphrase !== '' && data.passphrase !== undefined){
-      cy.get('#certificateForm_private_key_passphrase').type(data.passphrase)
+      cy.get('#certificateForm_private_key_passphrase').type(data.passphrase).should('be.visible');
     }
     cy.get('#buttonCreateCertificate').click();
     return cy.url().then((currentURL) => {
@@ -179,15 +179,15 @@ Cypress.Commands.add("addSuccessingTL24", (fileData) => {
 
   cy.visit("/key-manager/ssl-certificate/AddSSLCertificate");
   cy.fixture(fileData).then((data) => {
-    cy.get('#certificateForm_name').type(data.certificate_name)
-    cy.get('#certificateForm_region').type(data.region)
+    cy.get('#certificateForm_name').type(data.certificate_name).should('be.visible');
+    cy.get('#certificateForm_region').type(data.region).should('be.visible');
     cy.get('#certificateForm_certificate').type(data.certificate)
     if(data.intermediates !== '' && data.intermediates !== undefined){
       cy.get('#certificateForm_intermediates').type(data.intermediates)
     }
-    cy.get('#certificateForm_private_key').type(data.private_key)
+    cy.get('#certificateForm_private_key').type(data.private_key).should('be.visible');
     if(data.passphrase !== '' && data.passphrase !== undefined){
-      cy.get('#certificateForm_private_key_passphrase').type(data.passphrase)
+      cy.get('#certificateForm_private_key_passphrase').type(data.passphrase).should('be.visible');
     }
     cy.get('#buttonCreateCertificate').click();
     return cy.url().then((currentURL) => {
@@ -209,15 +209,15 @@ Cypress.Commands.add("addSuccessingTL25", (fileData) => {
 
   cy.visit("/key-manager/ssl-certificate/AddSSLCertificate");
   cy.fixture(fileData).then((data) => {
-    cy.get('#certificateForm_name').type(data.certificate_name)
-    cy.get('#certificateForm_region').type(data.region)
-    cy.get('#certificateForm_certificate').type(data.certificate)
+    cy.get('#certificateForm_name').type(data.certificate_name).should('be.visible');
+    cy.get('#certificateForm_region').type(data.region).should('be.visible');
+    cy.get('#certificateForm_certificate').type(data.certificate).should('be.visible');
     if(data.intermediates !== '' && data.intermediates !== undefined){
-      cy.get('#certificateForm_intermediates').type(data.intermediates)
+      cy.get('#certificateForm_intermediates').type(data.intermediates).should('be.visible');
     }
-    cy.get('#certificateForm_private_key').type(data.private_key)
+    cy.get('#certificateForm_private_key').type(data.private_key).should('be.visible');
     if(data.passphrase !== '' && data.passphrase !== undefined){
-      cy.get('#certificateForm_private_key_passphrase').type(data.passphrase)
+      cy.get('#certificateForm_private_key_passphrase').type(data.passphrase).should('be.visible');
     }
     cy.get('#buttonCreateCertificate').click();
     return cy.url().then((currentURL) => {
@@ -240,12 +240,12 @@ Cypress.Commands.add("addCertificateprivateKey", (fileData) => {
 
   cy.visit("/key-manager/ssl-certificate/AddSSLCertificate");
   cy.fixture(fileData).then((data) => {
-    cy.get('#certificateForm_name').type(data.certificate_name)
-    cy.get('#certificateForm_region').type(data.region)
-    cy.get('#certificateForm_certificate').type(data.certificate)
-    cy.get('#certificateForm_intermediates').type(data.intermediates)
-    cy.get('#certificateForm_private_key').type(data.private_key)
-    cy.get('#certificateForm_private_key_passphrase').type(data.passphrase)
+    cy.get('#certificateForm_name').type(data.certificate_name).should('be.visible');
+    cy.get('#certificateForm_region').type(data.region).should('be.visible');
+    cy.get('#certificateForm_certificate').type(data.certificate).should('be.visible');
+    cy.get('#certificateForm_intermediates').type(data.intermediates).should('be.visible');
+    cy.get('#certificateForm_private_key').type(data.private_key).should('be.visible');
+    cy.get('#certificateForm_private_key_passphrase').type(data.passphrase).should('be.visible');
     cy.get('#buttonCreateCertificate').click();
     return cy.url().then((currentURL) => {
       if (currentURL === "/key-manager/ssl-certificate") {
@@ -292,12 +292,12 @@ Cypress.Commands.add("addClickCencel", (fileData) => {
 
   cy.visit("/key-manager/ssl-certificate/AddSSLCertificate");
   cy.fixture(fileData).then((data) => {
-    cy.get('#certificateForm_name').type(data.certificate_name)
-    cy.get('#certificateForm_region').type(data.region)
-    cy.get('#certificateForm_certificate').type(data.certificate)
-    cy.get('#certificateForm_intermediates').type(data.intermediates)
-    cy.get('#certificateForm_private_key').type(data.private_key)
-    cy.get('#certificateForm_private_key_passphrase').type(data.passphrase)
+    cy.get('#certificateForm_name').type(data.certificate_name).should('be.visible');
+    cy.get('#certificateForm_region').type(data.region).should('be.visible');
+    cy.get('#certificateForm_certificate').type(data.certificate).should('be.visible');
+    cy.get('#certificateForm_intermediates').type(data.intermediates).should('be.visible');
+    cy.get('#certificateForm_private_key').type(data.private_key).should('be.visible');
+    cy.get('#certificateForm_private_key_passphrase').type(data.passphrase).should('be.visible');
     cy.get('.btn-button-tertiary').click();
     return cy.url().then((currentURL) => {
       if (currentURL === "/key-manager/ssl-certificate") {
@@ -314,22 +314,22 @@ Cypress.Commands.add("addCheck", (fileData) => {
   cy.visit("/key-manager/ssl-certificate/AddSSLCertificate");
   cy.fixture(fileData).then((data) => {
     if(data.certificate_name !== '' && data.certificate_name !== undefined){
-      cy.get('#certificateForm_name').type(data.certificate_name)
+      cy.get('#certificateForm_name').type(data.certificate_name).should('be.visible');
     }
     if(data.region !== '' && data.region !== undefined){
-      cy.get('#certificateForm_region').type(data.region)
+      cy.get('#certificateForm_region').type(data.region).should('be.visible');
     }
     if(data.certificate !== '' && data.certificate !== undefined){
-      cy.get('#certificateForm_certificate').type(data.certificate)
+      cy.get('#certificateForm_certificate').type(data.certificate).should('be.visible');
     }
     if(data.intermediates !== '' && data.intermediates !== undefined){
-      cy.get('#certificateForm_intermediates').type(data.intermediates)
+      cy.get('#certificateForm_intermediates').type(data.intermediates).should('be.visible');
     }
     if(data.private_key !== '' && data.private_key !== undefined){
-      cy.get('#certificateForm_private_key').type(data.private_key)
+      cy.get('#certificateForm_private_key').type(data.private_key).should('be.visible');
     }
     if(data.passphrase !== '' && data.passphrase !== undefined){
-      cy.get('#certificateForm_private_key_passphrase').type(data.passphrase)
+      cy.get('#certificateForm_private_key_passphrase').type(data.passphrase).should('be.visible');
     }
     cy.get('#buttonCreateCertificate').click();
     return cy.url().then((currentURL) => {
@@ -355,14 +355,14 @@ Cypress.Commands.add("addCheckPriKeyNoPass", (fileData) => {
 
   cy.visit("/key-manager/ssl-certificate/AddSSLCertificate");
   cy.fixture(fileData).then((data) => {
-    cy.get('#certificateForm_name').type(data.certificate_name)
-    cy.get('#certificateForm_region').type(data.region)
+    cy.get('#certificateForm_name').type(data.certificate_name).should('be.visible');
+    cy.get('#certificateForm_region').type(data.region).should('be.visible');
     if(data.intermediates !== ''){
-      cy.get('#certificateForm_intermediates').type(data.intermediates)
+      cy.get('#certificateForm_intermediates').type(data.intermediates).should('be.visible');
     }
-    cy.get('#certificateForm_certificate').type(data.certificate)
-    cy.get('#certificateForm_private_key').type(data.private_key)
-    cy.get('#certificateForm_private_key_passphrase').type(data.passphrase)
+    cy.get('#certificateForm_certificate').type(data.certificate).should('be.visible');
+    cy.get('#certificateForm_private_key').type(data.private_key).should('be.visible');
+    cy.get('#certificateForm_private_key_passphrase').type(data.passphrase).should('be.visible');
     cy.get('#buttonCreateCertificate').click();
     return cy.url().then((currentURL) => {
       if (currentURL === "/key-manager/ssl-certificate") {
@@ -383,12 +383,12 @@ Cypress.Commands.add("addCheckPriKeyAndPassphrase", (fileData) => {
 
   cy.visit("/key-manager/ssl-certificate/AddSSLCertificate");
   cy.fixture(fileData).then((data) => {
-    cy.get('#certificateForm_name').type(data.certificate_name)
-    cy.get('#certificateForm_region').type(data.region)
-    cy.get('#certificateForm_intermediates').type(data.intermediates)
-    cy.get('#certificateForm_certificate').type(data.certificate)
-    cy.get('#certificateForm_private_key').type(data.private_key)
-    cy.get('#certificateForm_private_key_passphrase').type(data.passphrase)
+    cy.get('#certificateForm_name').type(data.certificate_name).should('be.visible');
+    cy.get('#certificateForm_region').type(data.region).should('be.visible');
+    cy.get('#certificateForm_intermediates').type(data.intermediates).should('be.visible');
+    cy.get('#certificateForm_certificate').type(data.certificate).should('be.visible');
+    cy.get('#certificateForm_private_key').type(data.private_key).should('be.visible');
+    cy.get('#certificateForm_private_key_passphrase').type(data.passphrase).should('be.visible');
     cy.get('#buttonCreateCertificate').click();
     return cy.url().then((currentURL) => {
       if (currentURL === "/key-manager/ssl-certificate") {
