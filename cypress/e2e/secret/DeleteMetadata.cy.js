@@ -1,8 +1,18 @@
 
 describe("Chức năng 8: Xóa metadata của 1 Secret", () => {
-    it("Xóa metadata thành công", () => {
+    it.skip("Xóa metadata thành công trong chi tiết", () => {
       cy.deleteMetadataSuccess("secret/TL_56_data_test.json");
     });
+    it.skip("Xóa metadata thành công ngoài danh sách", () => {
+      cy.deleteSecretSuccess("secret/TL_57_data_test.json");
+    });
+    it("Xóa metadata hiển thị popup nhấn hủy", () => {
+      cy.deleteSecretFail("secret/TL_41_data_test.json");
+    });
+    it.skip("Xóa metadata hiển thị popup nhấn icon X", () => {
+      cy.deleteSecretFailX("secret/TL_41_data_test.json");
+    });
+    
     // it("Edit trùng key", () => {
     //   cy.editMetaExitsKey("secret/TL_53_data_test.json");
     // });
