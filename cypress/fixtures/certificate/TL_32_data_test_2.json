@@ -1,0 +1,11 @@
+{
+    "certificate_name": "Data_test4",
+    "common_name": "ViettelCloud.VTS",
+    "series_numer": "5a:28:95:ed:db:f7:00:11:74:c1:e1:88:02:06:c0:c6:e7:c5:b4:5b",
+    "public_key": "_RSAPublicKey",
+    "signature_algorithm": "sha256WithRSAEncryption",
+    "dateEnd" : "243 ngày"
+}
+
+
+    
