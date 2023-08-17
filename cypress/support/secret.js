@@ -163,10 +163,10 @@ Cypress.Commands.add("createSecretFaild36", (fileData) => {
 // TL_38
 Cypress.Commands.add("findValidSecret", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_search
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get(".ant-table-row").should("have.length.gt", 0);
   });
 });
@@ -195,13 +195,26 @@ Cypress.Commands.add("deleteSecretSuccess", (fileData) => {
 
   cy.visit("/key-manager/secrets");
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
-    cy.get("td > a > span")
-      .filter((index, element) => element.innerText.trim() === data.secret_name)
-      .click();
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
+    cy.get("body").then(($el) => {
+      if (
+        $el.find("td > a > span").length > 0 &&
+        $el.find("td > a > span").filter(
+          (index, element) => element.innerText.trim() === data.secret_name
+        ).length > 0
+      ) {
+        cy.get("td > a > span")
+          .filter(
+            (index, element) => element.innerText.trim() === data.secret_name
+          )
+          .click();
+      } else {
+        cy.fail("Không tìm thấy dữ liệu xóa");
+      }
+    });
     cy.wait(1000);
     cy.url().then((url) => {
       // 'url' chứa URL hiện tại của trang web
@@ -240,24 +253,39 @@ Cypress.Commands.add("deleteSecretFail", (fileData) => {
 
   cy.visit("/key-manager/secrets");
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should("exist").type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
-    cy.get("td > a > span")
-      .filter(
-        (index, element) => element.innerText.trim() === data.secret_search
-      )
-      .click();
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should("exist").type("{enter}");
+    cy.get("body").then(($el) => {
+      if (
+        $el.find("td > a > span").length > 0 &&
+        $el.find("td > a > span").filter(
+          (index, element) => element.innerText.trim() === data.secret_name
+        ).length > 0
+      ) {
+        cy.get("td > a > span")
+          .filter(
+            (index, element) => element.innerText.trim() === data.secret_name
+          )
+          .click();
+      } else {
+        cy.fail("Không tìm thấy dữ liệu xóa");
+      }
+    });
     cy.wait(1000);
     cy.url().then((url) => {
       // 'url' chứa URL hiện tại của trang web
       const parts = url.split("=");
       cy.wait(1000);
       cy.visit("/key-manager/secrets");
+      cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should("exist").type(
+        data.secret_name
+      );
+      cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should("exist").type("{enter}");
       cy.get("td > a > span")
         .filter(
-          (index, element) => element.innerText.trim() === data.secret_search
+          (index, element) => element.innerText.trim() === data.secret_name
         )
         .parent()
         .parent()
@@ -273,7 +301,7 @@ Cypress.Commands.add("deleteSecretFail", (fileData) => {
       cy.get("input.ant-input.ant-input-disabled")
         .eq(0)
         .invoke("val")
-        .should("eq", data.secret_search);
+        .should("eq", data.secret_name);
     });
   });
 });
@@ -287,13 +315,13 @@ Cypress.Commands.add("deleteSecretFailX", (fileData) => {
 
   cy.visit("/key-manager/secrets");
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
-      data.secret_search
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
+      data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter(
-        (index, element) => element.innerText.trim() === data.secret_search
+        (index, element) => element.innerText.trim() === data.secret_name
       )
       .click();
     cy.wait(1000);
@@ -304,7 +332,7 @@ Cypress.Commands.add("deleteSecretFailX", (fileData) => {
       cy.visit("/key-manager/secrets");
       cy.get("td > a > span")
         .filter(
-          (index, element) => element.innerText.trim() === data.secret_search
+          (index, element) => element.innerText.trim() === data.secret_name
         )
         .parent()
         .parent()
@@ -318,7 +346,7 @@ Cypress.Commands.add("deleteSecretFailX", (fileData) => {
       cy.get("input.ant-input.ant-input-disabled")
         .eq(0)
         .invoke("val")
-        .should("eq", data.secret_search);
+        .should("eq", data.secret_name);
     });
   });
 });
@@ -328,10 +356,10 @@ Cypress.Commands.add("deleteSecretFailX", (fileData) => {
 Cypress.Commands.add("detailSecret", (fileData) => {
   cy.visit("/key-manager/secrets");
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter((index, element) => element.innerText.trim() === data.secret_name)
       .click();
@@ -411,10 +439,10 @@ Cypress.Commands.add("editSecretSuccess", (fileData) => {
 
   cy.visit("/key-manager/secrets");
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter((index, element) => element.innerText.trim() === data.secret_name)
       .click();
@@ -464,10 +492,10 @@ Cypress.Commands.add("editSecretFail", (fileData) => {
 
   cy.visit("/key-manager/secrets");
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter((index, element) => element.innerText.trim() === data.secret_name)
       .click();
@@ -524,10 +552,10 @@ Cypress.Commands.add("editSecretEmptyKey", (fileData) => {
 
   cy.visit("/key-manager/secrets");
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter((index, element) => element.innerText.trim() === data.secret_name)
       .click();
@@ -589,10 +617,10 @@ Cypress.Commands.add("editSecretRollbackList", (fileData) => {
 
   cy.visit("/key-manager/secrets");
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter((index, element) => element.innerText.trim() === data.secret_name)
       .click();
@@ -746,10 +774,10 @@ Cypress.Commands.add("editMetaSucess", (fileData) => {
   cy.visit("/key-manager/secrets");
 
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter((index, element) => element.innerText.trim() === data.secret_name)
       .click();
@@ -773,10 +801,10 @@ Cypress.Commands.add("editMetaExitsKey", (fileData) => {
   cy.visit("/key-manager/secrets");
 
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter((index, element) => element.innerText.trim() === data.secret_name)
       .click();
@@ -801,10 +829,10 @@ Cypress.Commands.add("editMetaEmptyKey", (fileData) => {
   cy.visit("/key-manager/secrets");
 
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter((index, element) => element.innerText.trim() === data.secret_name)
       .click();
@@ -828,10 +856,10 @@ Cypress.Commands.add("editMetaBackList", (fileData) => {
   cy.visit("/key-manager/secrets");
 
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter((index, element) => element.innerText.trim() === data.secret_name)
       .click();
@@ -858,11 +886,11 @@ Cypress.Commands.add("deleteMetadataSuccess", (fileData) => {
     : cy.loginDevelopment();
 
   cy.visit("/key-manager/secrets");
-  cy.fixture(fileData).then( (data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+  cy.fixture(fileData).then((data) => {
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter((index, element) => element.innerText.trim() === data.secret_name)
       .parent()
@@ -871,48 +899,60 @@ Cypress.Commands.add("deleteMetadataSuccess", (fileData) => {
       .find("td > div > span")
       .first()
       .click();
+    cy.wait(1000);
     if (data.metadata && data.metadata.length > 0) {
-      const el = Cypress.$("input[maxlength='128']");
-      cy.log("length", el.length === 0);
-      if (el.length > 0) {
-        for (let i = 0; i < data.metadata.length; i++) {
-          cy.get("input[maxlength='128']").each(($input, index) => {
-            const inputValue = $input.val();
-            if (inputValue === data.metadata[i].key.toString().trim()) {
-              cy.wrap($input)
-                .parents("tr")
-                .find("td:last-child div > span")
-                .click();
-            }
-          });
+      cy.get("span").then(($span) => {
+        cy.log("-----------------", $span.has("input[maxlength='128']"));
+        if ($span.find("input[maxlength='128']").length) {
+          let isFlag = false;
+          for (let i = 0; i < data.metadata.length; i++) {
+            cy.get("input[maxlength='128']").each(($input, index) => {
+              const inputValue = $input.val();
+              if (inputValue === data.metadata[i].key.toString().trim()) {
+                isFlag = true;
+                cy.wrap($input)
+                  .parents("tr")
+                  .find("td:last-child div > span")
+                  .click();
+              }
+            });
+          }
+          if (!isFlag) {
+            cy.fail("Không tồn tại phần tử muốn xóar");
+          }
+        } else {
+          cy.fail("Lỗi không có phần tử nào để xóa");
         }
-      }else {
-        throw new Error("Không tìm thấy phần tử input[maxlength='128']");
-      }
+      });
     }
     cy.get("#buttonUpdate").click();
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type(
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type(
       data.secret_name
     );
-    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Secret"]').should('be.visible').type("{enter}");
     cy.get("td > a > span")
       .filter((index, element) => element.innerText.trim() === data.secret_name)
       .click();
+    cy.get(".div-edit").click();
+    cy.wait(1000);
     if (data.metadata && data.metadata.length > 0) {
-      const el = Cypress.$("input[maxlength='128']");
-      if (el.length > 0) {
-        for (let i = 0; i < data.metadata.length; i++) {
-          cy.get("input[maxlength='128']").each(($input, index) => {
-            const inputValue = $input.val();
-            cy.log(inputValue);
-            if (inputValue === data.metadata[i].key.toString().trim()) {
-              cy.fail("Lỗi");
-            } else {
-              cy.log("success");
-            }
-          });
+      cy.get("span").then(($span) => {
+        cy.log("-----------------", $span.has("input[maxlength='128']"));
+        if ($span.find("input[maxlength='128']").length) {
+          for (let i = 0; i < data.metadata.length; i++) {
+            cy.get("input[maxlength='128']").each(($input, index) => {
+              const inputValue = $input.val();
+              if (inputValue === data.metadata[i].key.toString().trim()) {
+                cy.fail("Lỗi chưa xóa được");
+              } else {
+                cy.log("Thành công");
+              }
+            });
+          }
+        } else {
+          cy.log("Thành công");
         }
-      }
+      });
     }
   });
 });

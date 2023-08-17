@@ -1,8 +1,4 @@
 Cypress.Commands.add("baseCreateKey", (fileData) => {
-  Cypress.env("environment") === "production"
-    ? cy.loginProduction()
-    : cy.loginDevelopment();
-  cy.visit("/key-manager/keys/AddKeys");
   cy.fixture(fileData).then((data) => {
     cy.get('span > span > input[type="text"].ant-input').type(data.key_name);
     cy.get(
@@ -30,10 +26,6 @@ Cypress.Commands.add("baseCreateKey", (fileData) => {
 
 //TL1
 Cypress.Commands.add("keySearch", (fileData) => {
-  Cypress.env("environment") === "production"
-    ? cy.loginProduction()
-    : cy.loginDevelopment();
-  cy.visit("/key-manager/keys");
   cy.fixture(fileData).then((data) => {
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type(data.key_search);
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type("{enter}");
@@ -50,11 +42,6 @@ Cypress.Commands.add("keySearch", (fileData) => {
 
 //TL2
 Cypress.Commands.add("searhNoResult", (fileData) => {
-  Cypress.env("environment") === "production"
-    ? cy.loginProduction()
-    : cy.loginDevelopment();
-
-  cy.visit("/key-manager/keys");
   cy.fixture(fileData).then((data) => {
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type(data.key_search);
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type("{enter}");
@@ -66,11 +53,6 @@ Cypress.Commands.add("searhNoResult", (fileData) => {
 
 //TL3-TL4
 Cypress.Commands.add("checkDetailKey", (fileData) => {
-  Cypress.env("environment") === "production"
-    ? cy.loginProduction()
-    : cy.loginDevelopment();
-
-  cy.visit("/key-manager/keys");
   cy.fixture(fileData).then((data) => {
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type(data.key_search);
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type("{enter}");
@@ -91,92 +73,144 @@ Cypress.Commands.add("checkDetailKey", (fileData) => {
 
 //TL5
 Cypress.Commands.add("deleteKeySuccess", (fileData) => {
-  Cypress.env("environment") === "production"
-    ? cy.loginProduction()
-    : cy.loginDevelopment();
-
-  cy.visit("/key-manager/keys");
   cy.fixture(fileData).then((data) => {
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type(data.key_search);
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type("{enter}");
-    cy.get("td > a > span").filter((index, element) => element.innerText.trim() === data.key_search).click();
-    cy.wait(1000)
-    var query = ""
-    cy.url().then(url => {
+    cy.get("body").then(($el) => {
+      if (
+        $el.find("td > a > span").length > 0 &&
+        $el
+          .find("td > a > span")
+          .filter(
+            (index, element) => element.innerText.trim() === data.key_search
+          ).length > 0
+      ) {
+        cy.get("td > a > span")
+          .filter(
+            (index, element) => element.innerText.trim() === data.key_search
+          )
+          .click();
+      } else {
+        cy.fail("Không tìm thấy dữ liệu xóa");
+      }
+    });
+    cy.wait(1000);
+    cy.url().then((url) => {
       // 'url' chứa URL hiện tại của trang web
       const parts = url.split("=");
-      query = parts[1]
       cy.visit("/key-manager/keys");
-      cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).parent().parent().parent().find("td > div > span").click();
+      cy.get("td > a > span")
+        .filter(
+          (index, element) => element.innerText.trim() === data.key_search
+        )
+        .parent()
+        .parent()
+        .parent()
+        .find("td > div > span")
+        .click();
       Cypress.env("environment") === "production"
-      ? cy.get(".btn-button-primary").should("be.visible").click()
-      : cy.get("#okButton").should("be.visible").click();
+        ? cy.get(".btn-button-primary").should("be.visible").click()
+        : cy.get("#okButton").should("be.visible").click();
       cy.visit(`/key-manager/keys/DetailKeys?detail=${parts[1]}`);
       const divSelector = ".ant-notification-notice-message";
 
-      cy.get(divSelector)
-        .contains("Không tìm thấy")
-        .should("be.visible");
+      cy.get(divSelector).contains("Không tìm thấy").should("be.visible");
     });
   });
 });
 
 //TL6
 Cypress.Commands.add("deleteKeyFail", (fileData) => {
-  Cypress.env("environment") === "production"
-    ? cy.loginProduction()
-    : cy.loginDevelopment();
-
-  cy.visit("/key-manager/keys");
   cy.fixture(fileData).then((data) => {
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type(data.key_search);
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type("{enter}");
-    cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).click();
-    cy.wait(1000)
-    var query = ""
-    cy.url().then(url => {
+    cy.get("body").then(($el) => {
+      if (
+        $el.find("td > a > span").length > 0 &&
+        $el
+          .find("td > a > span")
+          .filter(
+            (index, element) => element.innerText.trim() === data.key_search
+          ).length > 0
+      ) {
+        cy.get("td > a > span")
+          .filter(
+            (index, element) => element.innerText.trim() === data.key_search
+          )
+          .click();
+      } else {
+        cy.fail("Không tìm thấy dữ liệu xóa");
+      }
+    });
+    cy.wait(1000);
+    cy.url().then((url) => {
       const parts = url.split("=");
-      query = parts[1]
       cy.visit("/key-manager/keys");
-      cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).parent().parent().parent().find("td > div > span").click();
+      cy.get("td > a > span")
+        .filter(
+          (index, element) => element.innerText.trim() === data.key_search
+        )
+        .parent()
+        .parent()
+        .parent()
+        .find("td > div > span")
+        .click();
       Cypress.env("environment") === "production"
-      ? cy.get(".btn-button-tertiary").should("be.visible").click()
-      : cy.get("#cancelButtonDetailBackup").should("be.visible").click();
+        ? cy.get(".btn-button-tertiary").should("be.visible").click()
+        : cy.get("#cancelButtonDetailBackup").should("be.visible").click();
       cy.visit(`/key-manager/keys/DetailKeys?detail=${parts[1]}`);
       const divSelector = ".ant-notification-notice-message";
       cy.get("input.ant-input.ant-input-disabled")
-      .eq(0)
-      .invoke("val")
-      .should("eq", data.key_search);
+        .eq(0)
+        .invoke("val")
+        .should("eq", data.key_search);
     });
   });
 });
 
 //TL7
 Cypress.Commands.add("deleteKeyFailX", (fileData) => {
-  Cypress.env("environment") === "production"
-    ? cy.loginProduction()
-    : cy.loginDevelopment();
-
-  cy.visit("/key-manager/keys");
   cy.fixture(fileData).then((data) => {
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type(data.key_search);
     cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type("{enter}");
-    cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).click();
-    cy.wait(1000)
-    var query = ""
-    cy.url().then(url => {
+    cy.get("body").then(($el) => {
+      if (
+        $el.find("td > a > span").length > 0 &&
+        $el
+          .find("td > a > span")
+          .filter(
+            (index, element) => element.innerText.trim() === data.key_search
+          ).length > 0
+      ) {
+        cy.get("td > a > span")
+          .filter(
+            (index, element) => element.innerText.trim() === data.key_search
+          )
+          .click();
+      } else {
+        cy.fail("Không tìm thấy dữ liệu xóa");
+      }
+    });
+    cy.wait(1000);
+    cy.url().then((url) => {
       const parts = url.split("=");
-      query = parts[1]
       cy.visit("/key-manager/keys");
-      cy.get("td > a > span") .filter((index, element) => element.innerText.trim() === data.key_search).parent().parent().parent().find("td > div > span").click();
-      cy.get(".ant-modal-close-x").should("be.visible").click()
+      cy.get("td > a > span")
+        .filter(
+          (index, element) => element.innerText.trim() === data.key_search
+        )
+        .parent()
+        .parent()
+        .parent()
+        .find("td > div > span")
+        .click();
+      cy.get(".ant-modal-close-x").should("be.visible").click();
       cy.visit(`/key-manager/keys/DetailKeys?detail=${parts[1]}`);
       const divSelector = ".ant-notification-notice-message";
       cy.get("input.ant-input.ant-input-disabled")
-      .eq(0)
-      .invoke("val")
-      .should("eq", data.key_search);
+        .eq(0)
+        .invoke("val")
+        .should("eq", data.key_search);
     });
   });
 });
@@ -187,11 +221,12 @@ Cypress.Commands.add("createKey", (fileData) => {
 
   // Lấy đường dẫn URL hiện tại và trả về giá trị
   return cy.url().then((currentURL) => {
-    if (currentURL === "/key-manager/keys") {
+    cy.wait(1000);
+    if (currentURL == currentURL.split("key-manager")[0] + "key-manager/keys") {
       cy.fixture(fileData).then((data) => {
         cy.get('input[placeholder="Tìm kiếm theo tên Key"]')
-          .type(data.key_name)
-          .should("be.visible");
+          .should("be.visible")
+          .type(data.key_name);
         cy.get('input[placeholder="Tìm kiếm theo tên Key"]').type("{enter}");
         cy.get("td > a > span").contains(data.key_name).click();
         cy.get("input.ant-input.ant-input-disabled")
@@ -220,55 +255,24 @@ Cypress.Commands.add("createKey", (fileData) => {
 Cypress.Commands.add("createKeyExist", (fileData) => {
   cy.baseCreateKey(fileData);
   return cy.url().then((currentURL) => {
-    if (currentURL === "/key-manager/keys") {
+    if (currentURL == currentURL.split("key-manager")[0] + "key-manager/keys") {
       cy.fail("Key chưa tồn tại");
     } else {
       const divSelector = ".ant-notification-notice-message";
 
       cy.get(divSelector)
-        .contains("Tên key đã tồn tại trong project này")
-        .should("be.visible");
+        .should("be.visible")
+        .contains("Tên key đã tồn tại trong project này");
     }
   });
 });
 
 // TL9
 Cypress.Commands.add("createKeyEmpty", (fileData) => {
-  // Load the data from the fixture
-  Cypress.env("environment") === "production"
-    ? cy.loginProduction()
-    : cy.loginDevelopment();
-
-  cy.visit("/key-manager/keys/AddKeys");
-  cy.fixture(fileData).then((data) => {
-    cy.get('span > span > input[type="text"].ant-input')
-      .type(data.key_name)
-      .clear();
-    cy.get(
-      'div[title="AES (Symmetric key used for Encrypt and Decrypt)"]'
-    ).click();
-    cy.get("li").contains(data.algorithm).should("be.visible").click();
-    if (data.type === "AES") {
-      cy.get('div[title="256 bits"]').click();
-      cy.get("li").contains(data.keylength).should("be.visible").click();
-    } else if (data.type === "RSA") {
-      cy.get('div[title="2048 bits"]').click();
-      cy.get("li").contains(data.keylength).should("be.visible").click();
-    } else {
-      cy.get('div[title="NIST_P256"]').click();
-      cy.get("li")
-        .contains(data.elliptic_curve_id)
-        .should("be.visible")
-        .click();
-    }
-  });
-
+  cy.baseCreateKey(fileData);
   cy.get("#buttonCreateKey").click();
-  cy.wait(2000);
-
-  // Lấy đường dẫn URL hiện tại và trả về giá trị
   return cy.url().then((currentURL) => {
-    if (currentURL === "/key-manager/keys") {
+    if (currentURL == currentURL.split("key-manager")[0] + "key-manager/keys") {
       cy.fail("Lỗi bỏ trống trường name những vẫn thêm thành công");
     } else {
       const divSelector = ".ant-form-explain";
@@ -282,38 +286,11 @@ Cypress.Commands.add("createKeyEmpty", (fileData) => {
 
 // TL10
 Cypress.Commands.add("createKeyCancel", (fileData) => {
-  // Load the data from the fixture
-  Cypress.env("environment") === "production"
-    ? cy.loginProduction()
-    : cy.loginDevelopment();
-
-  cy.visit("/key-manager/keys/AddKeys");
-  cy.fixture(fileData).then((data) => {
-    cy.get('span > span > input[type="text"].ant-input').type(data.key_name);
-    cy.get(
-      'div[title="AES (Symmetric key used for Encrypt and Decrypt)"]'
-    ).click();
-    cy.get("li").contains(data.algorithm).should("be.visible").click();
-    if (data.type === "AES") {
-      cy.get('div[title="256 bits"]').click();
-      cy.get("li").contains(data.keylength).should("be.visible").click();
-    } else if (data.type === "RSA") {
-      cy.get('div[title="2048 bits"]').click();
-      cy.get("li").contains(data.keylength).should("be.visible").click();
-    } else {
-      cy.get('div[title="NIST_P256"]').click();
-      cy.get("li")
-        .contains(data.elliptic_curve_id)
-        .should("be.visible")
-        .click();
-    }
-  });
-
+  cy.baseCreateKey(fileData);
   cy.get("button.btn-button-tertiary").click();
-  cy.wait(2000);
   return cy.url().then((currentURL) => {
-    if (currentURL.includes('/key-manager/keys')) {
-      cy.log("success")
+    if (currentURL.includes("/key-manager/keys")) {
+      cy.log("success");
     } else {
       cy.fail("Lỗi không quay lại trang danh sách");
     }
@@ -323,12 +300,9 @@ Cypress.Commands.add("createKeyCancel", (fileData) => {
 // TL11
 
 Cypress.Commands.add("createKeySpecialCharacters", (fileData) => {
-  // Load the data from the fixture
   cy.baseCreateKey(fileData);
-
-  // Lấy đường dẫn URL hiện tại và trả về giá trị
   return cy.url().then((currentURL) => {
-    if (currentURL === "/key-manager/keys") {
+    if (currentURL == currentURL.split("key-manager")[0] + "key-manager/keys") {
       cy.fail("Lỗi trường name nhập ký tự đặc biệt những vẫn thêm thành công");
     } else {
       const divSelector = ".ant-form-explain";
