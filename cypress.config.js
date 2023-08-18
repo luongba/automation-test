@@ -6,5 +6,7 @@ module.exports = defineConfig({
         env: {
             environment: "development", // Hoặc "production" tùy theo môi trường bạn muốn sử dụng
         },
+        viewportWidth: 2560,
+        viewportHeight: 1241,
     },
 });
