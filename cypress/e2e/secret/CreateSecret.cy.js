@@ -20,7 +20,7 @@ describe.skip('Chức năng 1: Tạo Secret', () => {
   })
 })
 
-describe.skip('Chức năng 2: Danh sách Secrets', () => {
+describe('Chức năng 2: Danh sách Secrets', () => {
   beforeEach(() => {
     Cypress.env("environment") === "production"
     ? cy.loginProduction()

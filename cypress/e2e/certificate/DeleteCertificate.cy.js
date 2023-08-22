@@ -1,4 +1,4 @@
-describe.skip("Chức năng 2 : Xóa SSL Certificate", () => {
+describe("Chức năng 2 : Xóa SSL Certificate", () => {
   beforeEach(() => {
     Cypress.env("environment") === "production"
       ? cy.loginProduction()
