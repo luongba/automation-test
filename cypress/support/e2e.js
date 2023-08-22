@@ -33,7 +33,28 @@ Cypress.Commands.add("loginProduction", () => {
     cy.get("td > div > span").should("be.visible").contains("huyen").click();
   });
 });
+Cypress.Keyboard.defaults({
+  keystrokeDelay: 0,
+})
 
+Cypress.Commands.add(
+  'paste',
+  { prevSubject: true, element: true },
+  ($element, data) => {
+    const clipboardData = new DataTransfer()
+    clipboardData.setData('text', data)
+    const pasteEvent = new ClipboardEvent('paste', {
+      bubbles: true,
+      cancelable: true,
+      data,
+      clipboardData,
+    })
+
+    cy.get($element).then(() => {
+      $element[0].dispatchEvent(pasteEvent)
+    })
+  },
+)
 Cypress.on("uncaught:exception", (err, runnable) => {
   // returning false here prevents Cypress from failing the test
   return false;

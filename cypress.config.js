@@ -8,6 +8,6 @@ module.exports = defineConfig({
         },
         viewportWidth: 2560,
         viewportHeight: 1241,
-        parseSpecialCharSequences: false
+        parseSpecialCharSequences: false,
     },
 });

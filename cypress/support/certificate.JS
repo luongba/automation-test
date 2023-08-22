@@ -62,19 +62,22 @@ Cypress.Commands.add("AddCheckExist", (fileData) => {
       .should("be.visible");
     cy.get("#certificateForm_region").type(data.region).should("be.visible");
     cy.get("#certificateForm_certificate")
-      .type(data.certificate, { delay: 0 })
+      .invoke("val", data.certificate)
+        .trigger("change")
       .should("be.visible");
     cy.get("#certificateForm_intermediates")
-      .type(data.intermediates, { delay: 0 })
+      .invoke("val", data.intermediates)
+        .trigger("change")
       .should("be.visible");
     cy.get("#certificateForm_private_key")
-      .type(data.private_key, { delay: 0 })
+      .invoke("val", data.private_key)
+      .trigger("change")
       .should("be.visible");
     cy.get("#certificateForm_private_key_passphrase")
       .type(data.passphrase, { delay: 0 })
       .should("be.visible");
     cy.get("#buttonCreateCertificate").click();
-    cy.wait(2000)
+    cy.wait(2000);
     return cy.url().then((currentURL) => {
       if (
         currentURL ==
@@ -99,31 +102,34 @@ Cypress.Commands.add("addSuccessingTL23", (fileData) => {
     cy.get("#certificateForm_region").type(data.region).should("be.visible");
     if (data.intermediates !== "" && data.intermediates !== undefined) {
       cy.get("#certificateForm_intermediates")
-        .should("be.visible", { delay: 0 })
-        .type(data.intermediates);
+        .should("be.visible")
+        .invoke("val", data.intermediates)
+        .trigger("change");
     }
     if (data.certificate !== "" && data.certificate !== undefined) {
       cy.get("#certificateForm_certificate")
         .should("be.visible")
-        .type(data.certificate, { delay: 0 });
+        .invoke("val", data.certificate)
+        .trigger("change");
     }
     cy.get("#certificateForm_private_key")
       .should("be.visible")
-      .type(data.private_key, { delay: 0 });
+      .invoke("val", data.private_key)
+      .trigger("change");
     if (data.passphrase !== "" && data.passphrase !== undefined) {
       cy.get("#certificateForm_private_key_passphrase")
         .should("be.visible")
         .type(data.passphrase, { delay: 0 });
     }
     cy.get("#buttonCreateCertificate").click();
-    cy.wait(2000)
+    cy.wait(2000);
     return cy.url().then((currentURL) => {
       try {
         if (
           currentURL ===
           currentURL.split("key-manager")[0] + "key-manager/ssl-certificate"
         ) {
-          cy.detailCertificateCheckName(fileData)
+          cy.detailCertificateCheckName(fileData);
         } else {
           cy.fail("Tạo không thành công");
         }
@@ -136,22 +142,25 @@ Cypress.Commands.add("addSuccessingTL23", (fileData) => {
 Cypress.Commands.add("addSuccessingTL24", (fileData) => {
   cy.fixture(fileData).then((data) => {
     cy.get("#certificateForm_name")
-      .type(data.certificate_name)
-      .should("be.visible");
+      .should("be.visible")
+      .type(data.certificate_name);
     cy.get("#certificateForm_region").type(data.region).should("be.visible");
     if (data.intermediates !== "" && data.intermediates !== undefined) {
       cy.get("#certificateForm_intermediates")
-        .should("be.visible", { delay: 0 })
-        .type(data.intermediates);
+        .should("be.visible")
+        .invoke("val", data.intermediates)
+        .trigger("change");
     }
     if (data.certificate !== "" && data.certificate !== undefined) {
       cy.get("#certificateForm_certificate")
         .should("be.visible")
-        .type(data.certificate, { delay: 0 });
+        .invoke("val", data.certificate)
+        .trigger("change");
     }
     cy.get("#certificateForm_private_key")
       .should("be.visible")
-      .type(data.private_key, { delay: 0 });
+      .invoke("val", data.private_key)
+      .trigger("change");
     if (data.passphrase !== "" && data.passphrase !== undefined) {
       cy.get("#certificateForm_private_key_passphrase")
         .should("be.visible")
@@ -167,8 +176,8 @@ Cypress.Commands.add("addSuccessingTL24", (fileData) => {
       } else {
         const divSelector = ".ant-notification-notice-message";
         cy.get(divSelector, { timeout: 10000 })
-          .contains("Tạo SSL Certificate thành công")
-          .should("be.visible");
+          .should("be.visible")
+          .contains("Tạo SSL Certificate thành công");
       }
     });
   });
@@ -176,36 +185,39 @@ Cypress.Commands.add("addSuccessingTL24", (fileData) => {
 Cypress.Commands.add("addSuccessingTL25", (fileData) => {
   cy.fixture(fileData).then((data) => {
     cy.get("#certificateForm_name")
-      .type(data.certificate_name)
-      .should("be.visible");
-    cy.get("#certificateForm_region").type(data.region).should("be.visible");
+      .should("be.visible")
+      .type(data.certificate_name);
+    cy.get("#certificateForm_region").should("be.visible").type(data.region);
     if (data.intermediates !== "" && data.intermediates !== undefined) {
       cy.get("#certificateForm_intermediates")
-        .should("be.visible", { delay: 0 })
-        .type(data.intermediates);
+        .should("be.visible")
+        .invoke("val", data.intermediates)
+        .trigger("change");
     }
     if (data.certificate !== "" && data.certificate !== undefined) {
       cy.get("#certificateForm_certificate")
         .should("be.visible")
-        .type(data.certificate, { delay: 0 });
+        .invoke("val", data.certificate)
+        .trigger("change");
     }
     cy.get("#certificateForm_private_key")
       .should("be.visible")
-      .type(data.private_key, { delay: 0 });
+      .invoke("val", data.private_key)
+      .trigger("change");
     if (data.passphrase !== "" && data.passphrase !== undefined) {
       cy.get("#certificateForm_private_key_passphrase")
         .should("be.visible")
         .type(data.passphrase, { delay: 0 });
     }
     cy.get("#buttonCreateCertificate").click();
-    cy.wait(2000)
+    cy.wait(2000);
     return cy.url().then((currentURL) => {
       try {
         if (
           currentURL ===
           currentURL.split("key-manager")[0] + "key-manager/ssl-certificate"
         ) {
-          cy.detailCertificateCheckName(fileData)
+          cy.detailCertificateCheckName(fileData);
         } else {
           cy.fail("Tạo không thành công");
         }
@@ -219,26 +231,30 @@ Cypress.Commands.add("addSuccessingTL25", (fileData) => {
 Cypress.Commands.add("addCertificateprivateKey", (fileData) => {
   cy.fixture(fileData).then((data) => {
     cy.get("#certificateForm_name")
-      .type(data.certificate_name)
-      .should("be.visible");
-    cy.get("#certificateForm_region").type(data.region).should("be.visible");
+      .should("be.visible")
+      .type(data.certificate_name);
+    cy.get("#certificateForm_region").should("be.visible").type(data.region);
     if (data.intermediates !== "" && data.intermediates !== undefined) {
       cy.get("#certificateForm_intermediates")
-        .should("be.visible", { delay: 0 })
-        .type(data.intermediates);
+        .should("be.visible")
+        .invoke("val", data.intermediates)
+        .trigger("change");
     }
     if (data.certificate !== "" && data.certificate !== undefined) {
       cy.get("#certificateForm_certificate")
         .should("be.visible")
-        .type(data.certificate, { delay: 0 });
+        .invoke("val", data.certificate)
+        .trigger("change");
     }
     cy.get("#certificateForm_private_key")
       .should("be.visible")
-      .type(data.private_key, { delay: 0 });
+      .invoke("val", data.private_key)
+        .trigger("change");
     if (data.passphrase !== "" && data.passphrase !== undefined) {
       cy.get("#certificateForm_private_key_passphrase")
         .should("be.visible")
-        .type(data.passphrase, { delay: 0 });
+        .invoke("val", data.passphrase)
+        .trigger("change");
     }
     cy.get("#buttonCreateCertificate").click();
     return cy.url().then((currentURL) => {
@@ -250,7 +266,7 @@ Cypress.Commands.add("addCertificateprivateKey", (fileData) => {
       } else {
         const divSelector = ".ant-form-explain";
 
-        cy.get(divSelector).contains("Sai định dạng PEM").should("be.visible");
+        cy.get(divSelector).should("be.visible").contains("Sai định dạng PEM");
       }
     });
   });
@@ -267,8 +283,8 @@ Cypress.Commands.add("addNull", (fileData) => {
     } else {
       const divSelector = ".ant-form-explain";
       cy.get(divSelector)
-        .contains("Vui lòng nhập thông tin")
-        .should("be.visible");
+        .should("be.visible")
+        .contains("Vui lòng nhập thông tin");
     }
   });
 });
@@ -278,20 +294,23 @@ Cypress.Commands.add("addClickCencel", (fileData) => {
     cy.get("#certificateForm_name")
       .type(data.certificate_name)
       .should("be.visible");
-    cy.get("#certificateForm_region").type(data.region).should("be.visible");
+    cy.get("#certificateForm_region").should("be.visible").type(data.region);
     if (data.intermediates !== "" && data.intermediates !== undefined) {
       cy.get("#certificateForm_intermediates")
-        .should("be.visible", { delay: 0 })
-        .type(data.intermediates);
+        .should("be.visible")
+        .invoke("val", data.intermediates)
+        .trigger("change");
     }
     if (data.certificate !== "" && data.certificate !== undefined) {
       cy.get("#certificateForm_certificate")
         .should("be.visible")
-        .type(data.certificate, { delay: 0 });
+        .invoke("val", data.certificate)
+        .trigger("change");
     }
     cy.get("#certificateForm_private_key")
       .should("be.visible")
-      .type(data.private_key, { delay: 0 });
+      .invoke("val", data.private_key)
+      .trigger("change");
     if (data.passphrase !== "" && data.passphrase !== undefined) {
       cy.get("#certificateForm_private_key_passphrase")
         .should("be.visible")
@@ -312,25 +331,28 @@ Cypress.Commands.add("addCheck", (fileData) => {
   cy.fixture(fileData).then((data) => {
     if (data.certificate_name !== "" && data.certificate_name !== undefined) {
       cy.get("#certificateForm_name")
-        .type(data.certificate_name)
-        .should("be.visible");
+        .should("be.visible")
+        .type(data.certificate_name);
     }
     if (data.region !== "" && data.region !== undefined) {
-      cy.get("#certificateForm_region").type(data.region).should("be.visible");
+      cy.get("#certificateForm_region").should("be.visible").type(data.region);
     }
     if (data.intermediates !== "" && data.intermediates !== undefined) {
       cy.get("#certificateForm_intermediates")
-        .should("be.visible", { delay: 0 })
-        .type(data.intermediates);
+        .should("be.visible")
+        .invoke("val", data.intermediates)
+        .trigger("change");
     }
     if (data.certificate !== "" && data.certificate !== undefined) {
       cy.get("#certificateForm_certificate")
         .should("be.visible")
-        .type(data.certificate, { delay: 0 });
+        .invoke("val", data.certificate)
+        .trigger("change");
     }
     cy.get("#certificateForm_private_key")
       .should("be.visible")
-      .type(data.private_key, { delay: 0 });
+      .invoke("val", data.private_key)
+      .trigger("change");
     if (data.passphrase !== "" && data.passphrase !== undefined) {
       cy.get("#certificateForm_private_key_passphrase")
         .should("be.visible")
@@ -347,11 +369,11 @@ Cypress.Commands.add("addCheck", (fileData) => {
         const divSelector = ".ant-form-explain";
 
         cy.get(divSelector)
+          .should("be.visible")
           .contains(
             "Tên chứng chỉ chỉ có thể chứa các chữ cái (a-z, A-Z), số (0-9), dấu gạch ngang (-) và dấu gạch dưới (_)" ||
               "Sai định dạng PEM"
-          )
-          .should("be.visible");
+          );
       }
     });
   });
@@ -361,25 +383,28 @@ Cypress.Commands.add("addCheckPriKeyNoPass", (fileData) => {
   cy.fixture(fileData).then((data) => {
     if (data.certificate_name !== "" && data.certificate_name !== undefined) {
       cy.get("#certificateForm_name")
-        .type(data.certificate_name)
-        .should("be.visible");
+        .should("be.visible")
+        .type(data.certificate_name);
     }
     if (data.region !== "" && data.region !== undefined) {
-      cy.get("#certificateForm_region").type(data.region).should("be.visible");
+      cy.get("#certificateForm_region").should("be.visible").type(data.region);
     }
     if (data.intermediates !== "" && data.intermediates !== undefined) {
       cy.get("#certificateForm_intermediates")
-        .should("be.visible", { delay: 0 })
-        .type(data.intermediates);
+        .should("be.visible")
+        .invoke("val", data.intermediates)
+        .trigger("change");
     }
     if (data.certificate !== "" && data.certificate !== undefined) {
       cy.get("#certificateForm_certificate")
         .should("be.visible")
-        .type(data.certificate, { delay: 0 });
+        .invoke("val", data.certificate)
+        .trigger("change");
     }
     cy.get("#certificateForm_private_key")
       .should("be.visible")
-      .type(data.private_key, { delay: 0 });
+      .invoke("val", data.private_key)
+      .trigger("change");
     if (data.passphrase !== "" && data.passphrase !== undefined) {
       cy.get("#certificateForm_private_key_passphrase")
         .should("be.visible")
@@ -395,8 +420,8 @@ Cypress.Commands.add("addCheckPriKeyNoPass", (fileData) => {
       } else {
         const divSelector = ".ant-notification-notice-message";
         cy.get(divSelector)
-          .contains("Không thể giải mã private key với passphrase đã nhập")
-          .should("be.visible");
+          .should("be.visible")
+          .contains("Không thể giải mã private key với passphrase đã nhập");
       }
     });
   });
@@ -405,29 +430,33 @@ Cypress.Commands.add("addCheckPriKeyAndPassphrase", (fileData) => {
   cy.fixture(fileData).then((data) => {
     if (data.certificate_name !== "" && data.certificate_name !== undefined) {
       cy.get("#certificateForm_name")
-        .type(data.certificate_name)
-        .should("be.visible");
+        .should("be.visible")
+        .type(data.certificate_name);
     }
     if (data.region !== "" && data.region !== undefined) {
-      cy.get("#certificateForm_region").type(data.region).should("be.visible");
+      cy.get("#certificateForm_region").should("be.visible").type(data.region);
     }
     if (data.intermediates !== "" && data.intermediates !== undefined) {
       cy.get("#certificateForm_intermediates")
-        .should("be.visible", { delay: 0 })
-        .type(data.intermediates);
+        .should("be.visible")
+        .invoke("val", data.intermediates)
+        .trigger("change");
     }
     if (data.certificate !== "" && data.certificate !== undefined) {
       cy.get("#certificateForm_certificate")
         .should("be.visible")
-        .type(data.certificate, { delay: 0 });
+        .invoke("val", data.certificate)
+        .trigger("change");
     }
     cy.get("#certificateForm_private_key")
       .should("be.visible")
-      .type(data.private_key, { delay: 0 });
+      .invoke("val", data.private_key)
+      .trigger("change");
     if (data.passphrase !== "" && data.passphrase !== undefined) {
       cy.get("#certificateForm_private_key_passphrase")
         .should("be.visible")
-        .type(data.passphrase, { delay: 0 });
+        .invoke("val", data.passphrase)
+        .trigger("change");
     }
     cy.get("#buttonCreateCertificate").click();
     return cy.url().then((currentURL) => {
