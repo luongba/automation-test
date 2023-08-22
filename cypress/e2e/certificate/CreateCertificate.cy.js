@@ -6,7 +6,7 @@ describe("Chức năng 3: Tạo SSL Certificate:", () => {
 
   cy.visit("/key-manager/ssl-certificate/AddSSLCertificate");
   });
-  it.skip("Test tên chứng chỉ đã tồn tại trong hệ thống", () => {
+  it("Test tên chứng chỉ đã tồn tại trong hệ thống", () => {
     cy.AddCheckExist("certificate/TL_22_data_test_3.json")
   });
   it("Test tạo thành công TL_23_1", () => {
@@ -22,6 +22,7 @@ describe("Chức năng 3: Tạo SSL Certificate:", () => {
     cy.addSuccessingTL23("certificate/TL_23_data_test_3_4.json")
   });
   it("Test tạo thành công TL_24", () => {
+    cy.addSuccessingTL23("certificate/TL_24_data_test_3.json")
   });
   it("Test tạo thành công với người dùng đã đăng kí chứng chỉ và co password", () => {
     cy.addSuccessingTL25("certificate/TL_25_data_test_3.json")
