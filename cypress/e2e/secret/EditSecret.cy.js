@@ -6,10 +6,10 @@ describe("Chức năng 5: Chỉnh sửa Secret", () => {
 
     cy.visit("/key-manager/secrets");
   });
-  it.skip("Chỉnh sửa secret thành công", () => {
+  it("Chỉnh sửa secret thành công", () => {
     cy.editSecretSuccess("secret/TL_43_data_test.json");
   });
-  it.skip("Chỉnh sửa secret thành công", () => {
+  it("Chỉnh sửa secret thành công", () => {
     cy.editSecretSuccess("secret/TL_44_data_test.json");
   });
   it("Chỉnh sửa secret trùng key", () => {

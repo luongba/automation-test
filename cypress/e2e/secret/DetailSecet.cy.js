@@ -4,7 +4,6 @@ describe("Chức năng 4: Xem chi tiết Secret", () => {
       ? cy.loginProduction()
       : cy.loginDevelopment();
     cy.visit("/key-manager/secrets");
-    cy.get(".ant-card-head button").click();
   });
   it("Kiểm tra hiển thị", () => {
     cy.detailSecret("secret/TL_42_data_test.json");

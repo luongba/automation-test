@@ -5,7 +5,7 @@ describe("Chức năng 4: Tạo Key", () => {
       : cy.loginDevelopment();
     cy.visit("/key-manager/keys/AddKeys");
   });
-  it.skip("Test thêm mới key", () => {
+  it("Test thêm mới key", () => {
     cy.createKey("key/TL_7_data_test_1.json");
   });
 
@@ -18,7 +18,7 @@ describe("Chức năng 4: Tạo Key", () => {
   it("Test thêm mới key nhấn button hủy", () => {
     cy.createKeyCancel("key/TL_7_data_test_1.json");
   });
-  it.skip("Test thêm mới key có ký tự đặc biệt", () => {
+  it("Test thêm mới key có ký tự đặc biệt", () => {
     cy.createKeySpecialCharacters("key/TL_11_data_test_1.json");
   });
 });

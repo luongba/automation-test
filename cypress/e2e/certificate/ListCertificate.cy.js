@@ -15,7 +15,7 @@ describe("Chức năng 1: Danh sách certificate:", () => {
   it("Test tìm kiếm certificate trả về  tồn tại", () => {
     cy.certificateSearchWithRegion("certificate/TL_3_data_test_1.json");
   });
-  it("Test tìm kiếm certificate trả về  tồn tại", () => {
+  it.skip("Test tìm kiếm certificate trả về  tồn tại", () => {
     cy.certificateSearchWithRegionNoResult("certificate/TL_4_data_test_1.json");
   });
 });

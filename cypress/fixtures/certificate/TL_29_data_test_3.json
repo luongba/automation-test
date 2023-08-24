@@ -1,8 +1,8 @@
 {
     "certificate_name": "",
+    "region": "",
     "certificate": "",
     "intermediates" : "",
     "private_key": "",
-    "passphrase": "",
-     "region": ""
-}
+    "passphrase": ""
+    }
