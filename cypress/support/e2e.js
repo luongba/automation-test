@@ -27,10 +27,15 @@ Cypress.Commands.add("loginProduction", () => {
       cy.get("#kc-login").click();
     });
 
-    cy.get("#buttonFirstService", { timeout: 20000 }).should("be.visible").click();
+    cy.get("#buttonFirstService", { timeout: 20000 }).should("exist").click();
     cy.wait(1000);
-    cy.get(".ant-table-body", { timeout: 20000 }).scrollTo(0, 500);
-    cy.get("td > div > span", { timeout: 20000 }).should("be.visible").contains("huyen").click();
+    cy.get('input[placeholder="Tìm kiếm theo tên dự án"]', { timeout: 20000 })
+      .should("exist")
+      .type("huyen");
+    cy.get('input[placeholder="Tìm kiếm theo tên dự án"]')
+      .should("exist")
+      .type("{enter}");
+    cy.get("td > div > span", { timeout: 20000 }).contains("huyen").should("exist").click();
   });
 });
 Cypress.Keyboard.defaults({

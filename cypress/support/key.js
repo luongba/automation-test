@@ -1,9 +1,11 @@
 Cypress.Commands.add("baseCreateKey", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.get('span > span > input[type="text"].ant-input').type(data.key_name);
-    cy.get(
-      'div[title="AES (Symmetric key used for Encrypt and Decrypt)"]'
-    ).click();
+    cy.get('span > span > input[type="text"].ant-input', {
+      timeout: 20000,
+    }).type(data.key_name);
+    cy.get('div[title="AES (Symmetric key used for Encrypt and Decrypt)"]', {
+      timeout: 20000,
+    }).click();
     cy.get("li").contains(data.algorithm).should("be.visible").click();
     if (data.type === "AES") {
       cy.get('div[title="256 bits"]').click();
@@ -24,8 +26,12 @@ Cypress.Commands.add("baseCreateKey", (fileData) => {
 //TL1
 Cypress.Commands.add("keySearch", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).type(data.key_search);
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', {
+      timeout: 20000,
+    }).type(data.key_search);
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', {
+      timeout: 20000,
+    }).type("{enter}");
     cy.wait(1000);
     cy.get("body").then(($el) => {
       if ($el.find("tbody > tr").length > 0) {
@@ -36,7 +42,7 @@ Cypress.Commands.add("keySearch", (fileData) => {
             cy.fail("Không tìm thấy kết quả.");
           }
         });
-      }else {
+      } else {
         cy.log("Không tìm thấy kết quả.");
       }
     });
@@ -46,8 +52,12 @@ Cypress.Commands.add("keySearch", (fileData) => {
 //TL2
 Cypress.Commands.add("searhNoResult", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).type(data.key_search);
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', {
+      timeout: 20000,
+    }).type(data.key_search);
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', {
+      timeout: 20000,
+    }).type("{enter}");
     cy.get(".ant-table-placeholder")
       .contains("Không tìm thấy dữ liệu")
       .should("be.visible");
@@ -57,10 +67,14 @@ Cypress.Commands.add("searhNoResult", (fileData) => {
 //TL3-TL4
 Cypress.Commands.add("checkDetailKey", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).type(data.key_search);
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', {
+      timeout: 20000,
+    }).type(data.key_search);
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', {
+      timeout: 20000,
+    }).type("{enter}");
     cy.get("td > a > span").contains(data.key_search).click();
-    cy.wait(2000)
+    cy.wait(2000);
     cy.get("input.ant-input.ant-input-disabled")
       .eq(0)
       .invoke("val")
@@ -78,8 +92,12 @@ Cypress.Commands.add("checkDetailKey", (fileData) => {
 //TL5
 Cypress.Commands.add("deleteKeySuccess", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).should('be.visible').type(data.key_search);
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).should('be.visible').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 })
+      .should("be.visible")
+      .type(data.key_search);
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 })
+      .should("be.visible")
+      .type("{enter}");
     cy.get("body").then(($el) => {
       if (
         $el.find("td > a > span").length > 0 &&
@@ -126,9 +144,13 @@ Cypress.Commands.add("deleteKeySuccess", (fileData) => {
 //TL6
 Cypress.Commands.add("deleteKeyFail", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.wait(1000)
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).should('be.visible').type(data.key_search);
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).should('be.visible').type("{enter}");
+    cy.wait(1000);
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 })
+      .should("be.visible")
+      .type(data.key_search);
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 })
+      .should("be.visible")
+      .type("{enter}");
     cy.get("body").then(($el) => {
       if (
         $el.find("td > a > span").length > 0 &&
@@ -164,7 +186,7 @@ Cypress.Commands.add("deleteKeyFail", (fileData) => {
         ? cy.get(".btn-button-tertiary").should("be.visible").click()
         : cy.get("#cancelButtonDetailBackup").should("be.visible").click();
       cy.visit(`/key-manager/keys/DetailKeys?detail=${parts[1]}`);
-      cy.wait(1000)
+      cy.wait(1000);
       const divSelector = ".ant-notification-notice-message";
       cy.get("input.ant-input.ant-input-disabled")
         .eq(0)
@@ -177,8 +199,12 @@ Cypress.Commands.add("deleteKeyFail", (fileData) => {
 //TL7
 Cypress.Commands.add("deleteKeyFailX", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).should('be.visible').type(data.key_search);
-    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).should('be.visible').type("{enter}");
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 })
+      .should("be.visible")
+      .type(data.key_search);
+    cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 })
+      .should("be.visible")
+      .type("{enter}");
     cy.get("body").then(($el) => {
       if (
         $el.find("td > a > span").length > 0 &&
@@ -224,15 +250,17 @@ Cypress.Commands.add("createKey", (fileData) => {
   // Load the data from the fixture
   cy.baseCreateKey(fileData);
   cy.get("#buttonCreateKey").click();
-  cy.wait(2000)
+  cy.wait(2000);
   return cy.url().then((currentURL) => {
     if (currentURL == currentURL.split("key-manager")[0] + "key-manager/keys") {
-      cy.wait(2000)
+      cy.wait(2000);
       cy.fixture(fileData).then((data) => {
         cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 })
           .should("be.visible")
           .type(data.key_name);
-        cy.get('input[placeholder="Tìm kiếm theo tên Key"]', { timeout: 20000 }).type("{enter}");
+        cy.get('input[placeholder="Tìm kiếm theo tên Key"]', {
+          timeout: 20000,
+        }).type("{enter}");
         cy.get("td > a > span").contains(data.key_name).click();
         cy.get("input.ant-input.ant-input-disabled")
           .eq(0)
@@ -295,11 +323,27 @@ Cypress.Commands.add("createKeyCancel", (fileData) => {
   cy.baseCreateKey(fileData);
   cy.get("button.btn-button-tertiary").click();
   return cy.url().then((currentURL) => {
-    if (currentURL.includes("/key-manager/keys")) {
-      cy.log("success");
-    } else {
-      cy.fail("Lỗi không quay lại trang danh sách");
-    }
+    cy.wait(2000);
+    cy.fixture(fileData).then((data) => {
+      if (currentURL.includes("/key-manager/keys")) {
+        cy.get('span > span > input[type="text"].ant-input', {
+          timeout: 20000,
+        }).type(data.key_name);
+        cy.get('body').then(($el) => {
+          if($el
+            .find("td > a > span")
+            .filter(
+              (index, element) => element.innerText.trim() === data.key_name
+            ).length > 0){
+            cy.fail("Lỗi nhấn hủy nhưng vẫn lưu thành công");
+          }else {
+            cy.log("sucess")
+          }
+        })
+      } else {
+        cy.fail("Lỗi không quay lại trang danh sách");
+      }
+    });
   });
 });
 
