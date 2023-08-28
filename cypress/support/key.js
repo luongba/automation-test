@@ -329,6 +329,7 @@ Cypress.Commands.add("createKeyCancel", (fileData) => {
         cy.get('span > span > input[type="text"].ant-input', {
           timeout: 20000,
         }).type(data.key_name);
+        cy.get('span > span > input[type="text"].ant-input').type("{enter}")
         cy.get('body').then(($el) => {
           if($el
             .find("td > a > span")

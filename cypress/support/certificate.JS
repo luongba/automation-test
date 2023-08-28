@@ -231,13 +231,28 @@ Cypress.Commands.add("addClickCencel", (fileData) => {
         .should("be.visible")
         .type(data.passphrase, { delay: 0 });
     }
-    cy.get("#buttonCreateCertificate").click();
+    cy.get("button.btn-button-tertiary").click();
     return cy.url().then((currentURL) => {
+      cy.wait(2000);
       if (
         currentURL ==
         currentURL.split("key-manager")[0] + "key-manager/ssl-certificate"
       ) {
-        cy.fail("Sảy ra lỗi");
+        cy.get('span > span > input[type="text"].ant-input', {
+          timeout: 20000,
+        }).type(data.certificate_name);
+        cy.get('span > span > input[type="text"].ant-input').type("{enter}")
+        cy.get('body').then(($el) => {
+          if($el
+            .find("td > a > span")
+            .filter(
+              (index, element) => element.innerText.trim() === data.certificate_name
+            ).length > 0){
+            cy.fail("Lỗi nhấn hủy nhưng vẫn lưu thành công");
+          }else {
+            cy.log("sucess")
+          }
+        })
       }
     });
   });

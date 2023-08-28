@@ -1,11 +1,11 @@
 Cypress.Commands.add("baseSecret", (data, type = "Create") => {
   for (let i = 0; i < data.secret_value.length; i++) {
     if (i !== 0) {
-      cy.get(".ant-space-item > .ant-row").first().find("button").click();
+      cy.get(".ant-space-item > .ant-row", {timeout: 20000}).first().find("button").click();
     }
     try {
       if (data.secret_value[i].key.toString() === "") {
-        cy.get(".ant-space-item > .ant-row")
+        cy.get(".ant-space-item > .ant-row", {timeout: 20000})
           .first()
           .find(`tr[data-row-key="${i}"]`)
           .find("input.ant-input")
@@ -13,7 +13,7 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
           .eq(0)
           .clear();
       } else {
-        cy.get(".ant-space-item > .ant-row")
+        cy.get(".ant-space-item > .ant-row", {timeout: 20000})
           .first()
           .find(`tr[data-row-key="${i}"]`)
           .find("input.ant-input")
@@ -23,7 +23,7 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
       }
 
       if (data.secret_value[i].value.toString() === "") {
-        cy.get(".ant-space-item > .ant-row")
+        cy.get(".ant-space-item > .ant-row", {timeout: 20000})
           .first()
           .find(`tr[data-row-key="${i}"]`)
           .find("input.ant-input")
@@ -31,7 +31,7 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
           .eq(0)
           .clear();
       } else {
-        cy.get(".ant-space-item > .ant-row")
+        cy.get(".ant-space-item > .ant-row", {timeout: 20000})
           .first()
           .find(`tr[data-row-key="${i}"]`)
           .find("input.ant-input")
@@ -47,17 +47,17 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
     if (data.metadata) {
       cy.get("body").then(
         ($span) => {
-          cy.get(".ant-space-item > .ant-row").last().find("button").click();
+          cy.get(".ant-space-item > .ant-row", {timeout: 20000}).last().find("button").click();
           for (let i = 0; i < data.metadata.length; i++) {
             if (i !== 0) {
-              cy.get(".ant-space-item > .ant-row")
+              cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                 .last()
                 .find("button")
                 .click();
             }
             try {
               if (data.metadata[i].key.toString() === "") {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -65,7 +65,7 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
                   .eq(0)
                   .clear();
               } else {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -75,7 +75,7 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
               }
 
               if (data.metadata[i].value.toString() === "") {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -83,7 +83,7 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
                   .eq(0)
                   .clear();
               } else {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -106,18 +106,18 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
       if ($span.find("input[maxlength='128']").length) {
         if (data.metadata && data.metadata.length > 0) {
           if (type === "Create") {
-            cy.get(".ant-space-item > .ant-row").last().find("button").click();
+            cy.get(".ant-space-item > .ant-row", {timeout: 20000}).last().find("button").click();
           }
           for (let i = 0; i < data.metadata.length; i++) {
             if (i !== 0) {
-              cy.get(".ant-space-item > .ant-row")
+              cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                 .last()
                 .find("button")
                 .click();
             }
             try {
               if (data.metadata[i].key.toString() === "") {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -125,7 +125,7 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
                   .eq(0)
                   .clear();
               } else {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -135,7 +135,7 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
               }
 
               if (data.metadata[i].value.toString() === "") {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -143,7 +143,7 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
                   .eq(0)
                   .clear();
               } else {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -165,11 +165,11 @@ Cypress.Commands.add("baseSecret", (data, type = "Create") => {
 Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
   for (let i = 0; i < data.secret_value.length; i++) {
     if (i !== 0) {
-      cy.get(".ant-space-item > .ant-row").first().find("button").click();
+      cy.get(".ant-space-item > .ant-row", {timeout: 20000}).first().find("button").click();
     }
     try {
       if (data.secret_value[i].key.toString() === "") {
-        cy.get(".ant-space-item > .ant-row")
+        cy.get(".ant-space-item > .ant-row", {timeout: 20000})
           .first()
           .find(`tr[data-row-key="${i}"]`)
           .find("input.ant-input")
@@ -177,7 +177,7 @@ Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
           .eq(0)
           .clear();
       } else {
-        cy.get(".ant-space-item > .ant-row")
+        cy.get(".ant-space-item > .ant-row", {timeout: 20000})
           .first()
           .find(`tr[data-row-key="${i}"]`)
           .find("input.ant-input")
@@ -187,7 +187,7 @@ Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
       }
 
       if (data.secret_value[i].value.toString() === "") {
-        cy.get(".ant-space-item > .ant-row")
+        cy.get(".ant-space-item > .ant-row", {timeout: 20000})
           .first()
           .find(`tr[data-row-key="${i}"]`)
           .find("input.ant-input")
@@ -195,7 +195,7 @@ Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
           .eq(0)
           .clear();
       } else {
-        cy.get(".ant-space-item > .ant-row")
+        cy.get(".ant-space-item > .ant-row", {timeout: 20000})
           .first()
           .find(`tr[data-row-key="${i}"]`)
           .find("input.ant-input")
@@ -211,17 +211,17 @@ Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
     if (data.metadata) {
       cy.get("body").then(
         ($span) => {
-          cy.get(".ant-space-item > .ant-row").last().find("button").click();
+          cy.get(".ant-space-item > .ant-row", {timeout: 20000}).last().find("button").click();
           for (let i = 0; i < data.metadata.length; i++) {
             if (i !== 0) {
-              cy.get(".ant-space-item > .ant-row")
+              cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                 .last()
                 .find("button")
                 .click();
             }
             try {
               if (data.metadata[i].key.toString() === "") {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -229,7 +229,7 @@ Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
                   .eq(0)
                   .clear();
               } else {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -239,7 +239,7 @@ Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
               }
 
               if (data.metadata[i].value.toString() === "") {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -247,7 +247,7 @@ Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
                   .eq(0)
                   .clear();
               } else {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -270,18 +270,18 @@ Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
       if ($span.find("input[maxlength='128']").length) {
         if (data.metadata && data.metadata.length > 0) {
           if (type === "Create") {
-            cy.get(".ant-space-item > .ant-row").last().find("button").click();
+            cy.get(".ant-space-item > .ant-row", {timeout: 20000}).last().find("button").click();
           }
           for (let i = 0; i < data.metadata.length; i++) {
             if (i !== 0) {
-              cy.get(".ant-space-item > .ant-row")
+              cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                 .last()
                 .find("button")
                 .click();
             }
             try {
               if (data.metadata[i].key.toString() === "") {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -289,7 +289,7 @@ Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
                   .eq(0)
                   .clear();
               } else {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -299,7 +299,7 @@ Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
               }
 
               if (data.metadata[i].value.toString() === "") {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -307,7 +307,7 @@ Cypress.Commands.add("baseEditMetaData", (data, type = "Create") => {
                   .eq(0)
                   .clear();
               } else {
-                cy.get(".ant-space-item > .ant-row")
+                cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                   .last()
                   .find(`tr[data-row-key="${i}"]`)
                   .find("input.ant-input")
@@ -389,7 +389,7 @@ Cypress.Commands.add("baseDeleteSecret", (data, type = "Success") => {
 // TL_33
 Cypress.Commands.add("createSecretSuccess", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.get("#AddSecretsForm_name").type(data.secret_name);
+    cy.get("#AddSecretsForm_name", {timeout: 20000}).type(data.secret_name);
     cy.baseSecret(data);
   });
   cy.get("#buttonCreate").click();
@@ -408,7 +408,7 @@ Cypress.Commands.add("createSecretSuccess", (fileData) => {
 // TL_34
 Cypress.Commands.add("createSecretFaild34", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.get("#AddSecretsForm_name").type(data.secret_name);
+    cy.get("#AddSecretsForm_name", {timeout: 20000}).type(data.secret_name);
   });
   cy.get("#buttonCreate").click();
   cy.get(`tr[data-row-key="0"]`)
@@ -418,7 +418,7 @@ Cypress.Commands.add("createSecretFaild34", (fileData) => {
 // TL_35
 Cypress.Commands.add("createSecretFaild35", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.get("#AddSecretsForm_name").type(data.secret_name);
+    cy.get("#AddSecretsForm_name", {timeout: 20000}).type(data.secret_name);
     cy.baseSecret(data);
     cy.get("#buttonCreate").click();
     cy.get(`tr[data-row-key="${data.secret_value.length - 1}"]`)
@@ -429,7 +429,7 @@ Cypress.Commands.add("createSecretFaild35", (fileData) => {
 // TL_36
 Cypress.Commands.add("createSecretFaild36", (fileData) => {
   cy.fixture(fileData).then((data) => {
-    cy.get("#AddSecretsForm_name").type(data.secret_name);
+    cy.get("#AddSecretsForm_name", {timeout: 20000}).type(data.secret_name);
     cy.get(`tr[data-row-key="0"]`)
       .find("input.ant-input")
       .eq(0)
@@ -438,9 +438,24 @@ Cypress.Commands.add("createSecretFaild36", (fileData) => {
       .find("input.ant-input")
       .eq(1)
       .type(data.secret_value[0].value);
+      cy.get(".page--footer .btn-button-tertiary").click();
+      cy.url().should("match", /\/key-manager\/secrets/);
+      cy.get('.search__data-input > .ant-input', {
+        timeout: 20000,
+      }).type(data.secret_name);
+      cy.get('.search__data-input > .ant-input').type("{enter}")
+      cy.get('body').then(($el) => {
+        if($el
+          .find("td > a > span")
+          .filter(
+            (index, element) => element.innerText.trim() === data.secret_name
+          ).length > 0){
+          cy.fail("Lỗi nhấn hủy nhưng vẫn lưu thành công");
+        }else {
+          cy.log("sucess")
+        }
+      })
   });
-  cy.get(".page--footer .btn-button-tertiary").click();
-  cy.url().should("match", /\/key-manager\/secrets/);
 });
 // TL_38
 Cypress.Commands.add("findValidSecret", (fileData) => {
@@ -536,7 +551,7 @@ Cypress.Commands.add("detailSecret", (fileData) => {
       .should("eq", data.secret_name);
     for (let i = 0; i < data.secret_value.length; i++) {
       try {
-        cy.get(".ant-space-item > .ant-row")
+        cy.get(".ant-space-item > .ant-row", {timeout: 20000})
           .first()
           .find(`tr[data-row-key="${i}"]`)
           .find("input.ant-input")
@@ -548,7 +563,7 @@ Cypress.Commands.add("detailSecret", (fileData) => {
               data.secret_value[i].key.toString().trim()
             ); // So sánh giá trị số từ trường nhập với giá trị số dự kiến
           });
-          cy.get(".ant-space-item > .ant-row")
+          cy.get(".ant-space-item > .ant-row", {timeout: 20000})
           .first()
           .find(`tr[data-row-key="${i}"]`)
           .find("input.ant-input")
@@ -567,7 +582,7 @@ Cypress.Commands.add("detailSecret", (fileData) => {
         if (data.metadata_value) {
           for (let i = 0; i < data.metadata_value.length; i++) {
             try {
-              cy.get(".ant-space-item > .ant-row")
+              cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                 .last()
                 .find(`tr[data-row-key="${i}"]`)
                 .find("input.ant-input")
@@ -579,7 +594,7 @@ Cypress.Commands.add("detailSecret", (fileData) => {
                     data.metadata_value[i].key.toString().trim()
                   ); // So sánh giá trị số từ trường nhập với giá trị số dự kiến
                 });
-              cy.get(".ant-space-item > .ant-row")
+              cy.get(".ant-space-item > .ant-row", {timeout: 20000})
                 .last()
                 .find(`tr[data-row-key="${i}"]`)
                 .find("input.ant-input")
@@ -704,7 +719,7 @@ Cypress.Commands.add("createMetaDataSuccess", (fileData) => {
   cy.fixture(fileData).then((data) => {
     cy.get(".ant-card-head button").click();
     cy.wait(1000);
-    cy.get("#AddSecretsForm_name").type(data.secret_name);
+    cy.get("#AddSecretsForm_name", {timeout: 20000}).type(data.secret_name);
 
     cy.baseEditMetaData(data);
     cy.get("#buttonCreate").click();
@@ -727,7 +742,7 @@ Cypress.Commands.add("createMetaDataExitsKey", (fileData) => {
   cy.fixture(fileData).then((data) => {
     cy.get(".ant-card-head button").click();
     cy.wait(1000);
-    cy.get("#AddSecretsForm_name").type(data.secret_name);
+    cy.get("#AddSecretsForm_name", {timeout: 20000}).type(data.secret_name);
 
     cy.baseEditMetaData(data);
     cy.get("#buttonCreate").click();
@@ -743,7 +758,7 @@ Cypress.Commands.add("createMetaDataEmptyKey", (fileData) => {
   cy.fixture(fileData).then((data) => {
     cy.get(".ant-card-head button").click();
     cy.wait(1000);
-    cy.get("#AddSecretsForm_name").type(data.secret_name);
+    cy.get("#AddSecretsForm_name", {timeout: 20000}).type(data.secret_name);
 
     cy.baseEditMetaData(data);
     cy.get("#buttonCreate").click();
@@ -758,7 +773,7 @@ Cypress.Commands.add("createMetaBackList", (fileData) => {
   cy.fixture(fileData).then((data) => {
     cy.get(".ant-card-head button").click();
     cy.wait(1000);
-    cy.get("#AddSecretsForm_name").type(data.secret_name);
+    cy.get("#AddSecretsForm_name", {timeout: 20000}).type(data.secret_name);
 
     cy.baseEditMetaData(data);
     cy.get(".btn-button-tertiary").click();
@@ -769,7 +784,21 @@ Cypress.Commands.add("createMetaBackList", (fileData) => {
         currentURL ==
         currentURL.split("key-manager")[0] + "key-manager/secrets"
       ) {
-        cy.log("success");
+        cy.get('.search__data-input > .ant-input', {
+          timeout: 20000,
+        }).type(data.secret_name);
+        cy.get('.search__data-input > .ant-input').type("{enter}")
+        cy.get('body').then(($el) => {
+          if($el
+            .find("td > a > span")
+            .filter(
+              (index, element) => element.innerText.trim() === data.secret_name
+            ).length > 0){
+            cy.fail("Lỗi nhấn hủy nhưng vẫn lưu thành công");
+          }else {
+            cy.log("sucess")
+          }
+        })
       } else {
         cy.fail("Lỗi không quay lại trang danh sách");
       }
